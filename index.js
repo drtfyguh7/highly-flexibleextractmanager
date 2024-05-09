@@ -1,6 +1,4 @@
-function add(x, y) {
-  return x + y;
+const fruits = ["apple", "banana", "orange"];
+for (const fruit of fruits) {
+  console.log(fruit);
 }
-
-const result = add(5, 3);
-console.log(result); // 8
