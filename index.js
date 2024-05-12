@@ -1,24 +1,26 @@
-function exist(board, word) {
-  const rows = board.length;
-  const cols = board[0].length;
-  for (let i = 0; i < rows; i++) {
-    for (let j = 0; j < cols; j++) {
-      if (dfs(board, i, j, word, 0)) return true;
+function isValidSudoku(board) {
+  for (let i = 0; i < 9; i++) {
+    const row = new Set();
+    const col = new Set();
+    const box = new Set();
+    for (let j = 0; j < 9; j++) {
+      const rowVal = board[i][j];
+      const colVal = board[j][i];
+      const boxVal =
+        board[3 * Math.floor(i / 3) + Math.floor(j / 3)][3 * (i % 3) + (j % 3)];
+      if (rowVal !== ".") {
+        if (row.has(rowVal)) return false;
+        row.add(rowVal);
+      }
+      if (colVal !== ".") {
+        if (col.has(colVal)) return false;
+        col.add(colVal);
+      }
+      if (boxVal !== ".") {
+        if (box.has(boxVal)) return false;
+        box.add(boxVal);
+      }
     }
   }
-  return false;
-  function dfs(board, i, j, word, index) {
-    if (index === word.length) return true;
-    if (i < 0 || i >= rows || j < 0 || j >= cols || board[i][j] !== word[index])
-      return false;
-    const temp = board[i][j];
-    board[i][j] = "#";
-    const found =
-      dfs(board, i + 1, j, word, index + 1) ||
-      dfs(board, i - 1, j, word, index + 1) ||
-      dfs(board, i, j + 1, word, index + 1) ||
-      dfs(board, i, j - 1, word, index + 1);
-    board[i][j] = temp;
-    return found;
-  }
+  return true;
 }
